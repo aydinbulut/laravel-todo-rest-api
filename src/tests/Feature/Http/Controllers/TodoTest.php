@@ -73,4 +73,20 @@ class TodoTest extends TestCase
         $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_VALIDATION_ERROR]);
         $response->assertJsonStructure(['errors' => ['name']]);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testTodoRead()
+    {
+        Todo::factory()->count(25)->create();
+
+        $response = $this->getJson(route('todos.show', ['todo' => 1]));
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['id', 'name', 'created_at', 'updated_at']);
+        $response->assertJsonPath('id', 1);
+    }
 }

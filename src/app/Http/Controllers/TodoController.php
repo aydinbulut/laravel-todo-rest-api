@@ -124,19 +124,52 @@ class TodoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Todo  $todo
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *      path="/todos/{todo}",
+     *      summary="Get a todo resource.",
+     *      tags={"Todo"},
+     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path"),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Todo")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @param Todo $todo
+     * @return JsonResponse
      */
     public function show(Todo $todo)
     {
-        //
+        return response()->json($todo->toArray());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Todo  $todo
+     * @param Todo $todo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Todo $todo)
@@ -147,7 +180,7 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Todo  $todo
+     * @param Todo $todo
      * @return \Illuminate\Http\Response
      */
     public function destroy(Todo $todo)
