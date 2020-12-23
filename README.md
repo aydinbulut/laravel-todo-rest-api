@@ -1,6 +1,6 @@
-# API & CLIENT PROJECTS
+# RESTful Todo API with Laravel 8, OpenAPI specs and Swagger UI  
 
-The APPs are located in `src/` directory. In the root, docker related files are located.
+The APP is located in `src/` directory. In the root, docker related files are located.
 
 ## GET STARTED 
 
@@ -23,17 +23,6 @@ You can use following commands;
 `make api-migrate`: Migrate the database   
 `make api-seed`: Seed(populate) the database with fake data    
 `make api-migrate-seed`: Combination of above 2 methods
-
-### CLIENT
-
-Client application written with ReactJs with Typescript template.
-
-#### Client Setup
-
-You can use following commands;
-
-`make client-install`: Install the dependencies  
-`make client-start`: Start the client application  
 
 ###### Help
 

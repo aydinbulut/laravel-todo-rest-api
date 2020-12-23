@@ -70,23 +70,6 @@ api-migrate-seed: ## Migrate and seed the database
 .PHONY: api-migrate api-seed api-migrate_seed
 
 
-##
-## =============================================================================
-##   CLIENT OPS
-## =============================================================================
-##
-
-client-install: ## Install modules according to the package-lock.json
-client-install: ${PROJECT_LOCATION_CLIENT}yarn.lock
-	$(YARN) install
-
-client-start: ## Start client app
-client-start: client-install
-	$(YARN) start
-
-.PHONY: client-install client-start
-
-
 .DEFAULT_GOAL := help
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) \
