@@ -77,6 +77,59 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Creat a todo resource.",
+                "operationId": "App\\Http\\Controllers\\TodoController::store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Todo"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Todo"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400-599": {
+                        "description": "unsuccessful operation",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ProblemResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },

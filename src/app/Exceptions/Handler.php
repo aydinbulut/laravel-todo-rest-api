@@ -57,6 +57,10 @@ class Handler extends ExceptionHandler
                 $apiProblem->addData('detail', sprintf('No %s resource found for %d', $matches[1], $matches[2]));
             }
 
+            if (!$apiProblem->getData('detail')) {
+                $apiProblem->addData('detail', $e->getMessage());
+            }
+
             return response()->json($apiProblem->toArray(), $apiProblem->getStatusCode());
         });
     }
