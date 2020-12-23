@@ -130,4 +130,30 @@ class TodoTest extends TestCase
         $response->assertJsonPath('id', $team->getKey());
         $response->assertJsonPath('name', $name);
     }
+
+    /**
+     * Test updating of a Todo resource.
+     *
+     * @return void
+     */
+    public function testTodoUpdateInvalidData()
+    {
+        /** @var Todo $team */
+        $team = Todo::factory()->create();
+
+        $name = 'Pay the bills';
+        $response = $this->putJson(
+            route('todos.update', ['todo' => $team->getKey()]),
+            [
+                'title' => $name,
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['status', 'type', 'title', 'errors']);
+        $response->assertJsonPath('status', 422);
+        $response->assertJsonPath('type', ApiProblem::TYPE_VALIDATION_ERROR);
+        $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_VALIDATION_ERROR]);
+        $response->assertJsonStructure(['errors' => ['name']]);
+    }
 }

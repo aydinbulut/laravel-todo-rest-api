@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -212,11 +213,11 @@ class TodoController extends Controller
      *      )
      * )
      *
-     * @param Request $request
+     * @param UpdateTodoRequest $request
      * @param Todo $todo
      * @return JsonResponse
      */
-    public function update(Request $request, Todo $todo)
+    public function update(UpdateTodoRequest $request, Todo $todo)
     {
         $todo->fill($request->only('name'));
         $todo->save();
