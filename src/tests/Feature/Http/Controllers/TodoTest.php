@@ -23,6 +23,7 @@ class TodoTest extends TestCase
 
         $response = $this->getJson(route('todos.index'));
 
+        $response->assertStatus(200);
         $response->assertJsonStructure(['data', 'total', 'from', 'to']);
         $response->assertJsonPath('total', 25);
         $response->assertJsonPath('from', 1);
