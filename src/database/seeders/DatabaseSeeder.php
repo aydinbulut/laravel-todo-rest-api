@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Player;
 use App\Models\Team;
+use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //User::factory();
+        Todo::factory()->count(25)->create();
     }
 }

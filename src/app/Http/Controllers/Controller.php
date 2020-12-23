@@ -19,6 +19,10 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Server(
  *     url="/api"
  * )
+ * @OA\Tag(
+ *     name="Todo",
+ *     description="Endpoints to operate on Todo resource"
+ * )
  * @OA\Schema(
  *      schema="ProblemResponse",
  *      required={"status", "type", "title"},

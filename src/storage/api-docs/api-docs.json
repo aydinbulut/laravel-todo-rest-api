@@ -1,0 +1,201 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API",
+        "description": "API OpenApi description",
+        "contact": {
+            "email": "aydin.blt@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/todos": {
+            "get": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Get list of todo resources.",
+                "operationId": "App\\Http\\Controllers\\TodoController::index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Display a listing of the resource.",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Todo"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PaginationWithoutData"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400-599": {
+                        "description": "unsuccessful operation",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ProblemResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProblemResponse": {
+                "required": [
+                    "status",
+                    "type",
+                    "title"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "integer",
+                        "example": 422
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "description": "This object may not be provided, it will return invalid parameters with error messages",
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationWithoutData": {
+                "properties": {
+                    "current_page": {
+                        "type": "integer"
+                    },
+                    "first_page_url": {
+                        "type": "string"
+                    },
+                    "from": {
+                        "type": "integer"
+                    },
+                    "last_page": {
+                        "type": "integer"
+                    },
+                    "last_page_url": {
+                        "type": "string"
+                    },
+                    "next_page_url": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "per_page": {
+                        "type": "integer"
+                    },
+                    "prev_page_url": {
+                        "type": "string"
+                    },
+                    "to": {
+                        "type": "integer"
+                    },
+                    "total": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Timestampable": {
+                "required": [
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "Todo": {
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Class Todo",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "description": "Class Todo",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Timestampable"
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Todo",
+            "description": "Endpoints to operate on Todo resource"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
