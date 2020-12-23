@@ -89,4 +89,21 @@ class TodoTest extends TestCase
         $response->assertJsonStructure(['id', 'name', 'created_at', 'updated_at']);
         $response->assertJsonPath('id', 1);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testTodoReadNonExisting()
+    {
+        $response = $this->getJson(route('todos.show', ['todo' => 1]));
+
+        $response->assertStatus(404);
+        $response->assertJsonStructure(['status', 'type', 'title', 'detail']);
+        $response->assertJsonPath('status', 404);
+        $response->assertJsonPath('type', ApiProblem::TYPE_NOT_FOUND_ERROR);
+        $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_NOT_FOUND_ERROR]);
+        $response->assertJsonPath('detail', 'No Todo resource found for 1');
+    }
 }
