@@ -229,11 +229,47 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @OA\Delete(
+     *      path="/todos/{todo}",
+     *      summary="Delete a todo resource.",
+     *      tags={"Todo"},
+     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path"),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Todo")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
      * @param Todo $todo
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+
+        return response()->json($todo->toArray());
     }
 }

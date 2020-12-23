@@ -156,4 +156,25 @@ class TodoTest extends TestCase
         $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_VALIDATION_ERROR]);
         $response->assertJsonStructure(['errors' => ['name']]);
     }
+
+    /**
+     * Test deleting of a Todo resource.
+     *
+     * @return void
+     */
+    public function testDeleteTodo()
+    {
+        $name = 'Pay the bills';
+        /** @var Todo $team */
+        $team = Todo::factory()->create([
+            'name' => $name,
+        ]);
+
+        $response = $this->deleteJson(route('todos.destroy', ['todo' => $team->getKey()]));
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['id', 'name', 'created_at', 'updated_at']);
+        $response->assertJsonPath('id', $team->getKey());
+        $response->assertJsonPath('name', $name);
+    }
 }
