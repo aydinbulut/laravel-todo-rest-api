@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Helpers\ApiProblem;
 use App\Models\Todo;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,5 +48,29 @@ class TodoTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure(['id', 'name', 'created_at', 'updated_at']);
         $response->assertJsonPath('name', $todo->getAttribute('name'));
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testTodoCreateDuplicate()
+    {
+        $name = 'Pay the bills';
+        Todo::factory()->create([
+            'name' => $name
+        ]);
+
+        $response = $this->postJson(route('todos.store'), [
+            'name' => $name
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['status', 'type', 'title', 'errors']);
+        $response->assertJsonPath('status', 422);
+        $response->assertJsonPath('type', ApiProblem::TYPE_VALIDATION_ERROR);
+        $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_VALIDATION_ERROR]);
+        $response->assertJsonStructure(['errors' => ['name']]);
     }
 }
