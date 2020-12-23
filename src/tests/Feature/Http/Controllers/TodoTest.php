@@ -177,4 +177,21 @@ class TodoTest extends TestCase
         $response->assertJsonPath('id', $team->getKey());
         $response->assertJsonPath('name', $name);
     }
+
+    /**
+     * Test deleting of a non-existing Todo resource.
+     *
+     * @return void
+     */
+    public function testDeleteTodoNonExisting()
+    {
+        $response = $this->deleteJson(route('todos.destroy', ['todo' => 1]));
+
+        $response->assertStatus(404);
+        $response->assertJsonStructure(['status', 'type', 'title', 'detail']);
+        $response->assertJsonPath('status', 404);
+        $response->assertJsonPath('type', ApiProblem::TYPE_NOT_FOUND_ERROR);
+        $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_NOT_FOUND_ERROR]);
+        $response->assertJsonPath('detail', 'No Todo resource found for 1');
+    }
 }
