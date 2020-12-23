@@ -14,6 +14,80 @@
         }
     ],
     "paths": {
+        "/tasks": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Get list of task resources.",
+                "operationId": "App\\Http\\Controllers\\TaskController::index",
+                "parameters": [
+                    {
+                        "name": "todo",
+                        "in": "query",
+                        "description": "Todo ID number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Display a listing of the resource.",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Task"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PaginationWithoutData"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400-599": {
+                        "description": "unsuccessful operation",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ProblemResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/todos": {
             "get": {
                 "tags": [
@@ -379,6 +453,34 @@
                     }
                 },
                 "type": "object"
+            },
+            "Task": {
+                "required": [
+                    "id",
+                    "name",
+                    "todo_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Class Task",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "description": "Class Task",
+                        "type": "string"
+                    },
+                    "todo_id": {
+                        "description": "Class Task",
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Timestampable"
+                    }
+                ]
             },
             "Todo": {
                 "required": [

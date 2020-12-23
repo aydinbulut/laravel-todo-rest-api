@@ -6,19 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Todo
+ * Class Task
  *
  * @OA\Schema(
- *      schema="Todo",
- *      required={"id", "name"},
+ *      schema="Task",
+ *      required={"id", "name", "todo_id"},
  *      @OA\Property(property="id", type="integer", readOnly=true),
  *      @OA\Property(property="name", type="string"),
+ *      @OA\Property(property="todo_id", type="integer"),
  *      allOf={@OA\Property(ref="#/components/schemas/Timestampable")},
  * )
  *
  * @package App\Models
  */
-class Todo extends Model
+class Task extends Model
 {
     use HasFactory;
 
@@ -27,13 +28,13 @@ class Todo extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'todo_id'];
 
     /**
-     * Get the tasks for the todo.
+     * Get the Todo that owns the task.
      */
-    public function tasks()
+    public function todo()
     {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Todo::class);
     }
 }
