@@ -168,13 +168,61 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @OA\Put(
+     *      path="/todos/{todo}",
+     *      summary="Update a todo resource.",
+     *      tags={"Todo"},
+     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path"),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Todo")
+     *                  }
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Todo")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @param Request $request
      * @param Todo $todo
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function update(Request $request, Todo $todo)
     {
-        //
+        $todo->fill($request->only('name'));
+        $todo->save();
+        $todo = $todo->fresh();
+
+        return response()->json($todo->toArray());
     }
 
     /**
