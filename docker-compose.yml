@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  #PHP Service
+  app:
+    build: docker/php
+    restart: unless-stopped
+    tty: true
+    links:
+      - db
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    env_file: .env
+    working_dir: /var/www
+    volumes:
+      - ${PROJECT_PATH}:/var/www:rw,delegated
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${PROJECT_PATH}:/var/www:rw,delegated
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - "./var/logs/nginx:/var/log/nginx:rw,delegated"
+    networks:
+      - app-network
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    env_file: .env
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+  #MySQL Service for test
+  db_test:
+    image: mysql:5.7.22
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    env_file: .env
+    volumes:
+      - dbdata_test:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
+  dbdata_test:
+    driver: local
