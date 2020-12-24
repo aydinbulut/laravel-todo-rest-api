@@ -109,4 +109,29 @@ class TaskTest extends TestCase
         $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_NOT_FOUND_ERROR]);
         $response->assertJsonPath('detail', 'No Task resource found for 1');
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testTaskUpdate()
+    {
+        /** @var Task $team */
+        $task = Task::factory()->for(Todo::factory())->create();
+
+        $name = 'Pay the heating bills';
+        $response = $this->putJson(
+            route('tasks.update', ['task' => $task->getKey()]),
+            [
+                'name' => $name,
+            ]
+        );
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['id', 'name', 'todo_id', 'created_at', 'updated_at']);
+        $response->assertJsonPath('id', $task->getKey());
+        $response->assertJsonPath('name', $name);
+        $response->assertJsonPath('todo_id', $task->getAttribute('todo_id'));
+    }
 }

@@ -173,11 +173,14 @@ class TaskController extends Controller
      *
      * @param Request $request
      * @param Task $task
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $task->fill($request->only('name'));
+        $task->save();
+
+        return response()->json($task->toArray());
     }
 
     /**
