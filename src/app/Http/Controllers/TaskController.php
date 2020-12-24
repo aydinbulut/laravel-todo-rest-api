@@ -70,6 +70,49 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @OA\Post(
+     *      path="/tasks",
+     *      summary="Creat a task resource.",
+     *      tags={"Task"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task")
+     *                  }
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
      * @param StoreTaskRequest $request
      * @return JsonResponse
      */
@@ -83,6 +126,39 @@ class TaskController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @OA\Get(
+     *      path="/tasks/{task}",
+     *      summary="Get a task resource.",
+     *      tags={"Task"},
+     *      @OA\Parameter(name="task", description="ID of Task", @OA\Schema(type="integer"), in="path", required=true),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
      *
      * @param Task $task
      * @return JsonResponse
