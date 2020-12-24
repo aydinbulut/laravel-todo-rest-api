@@ -134,4 +134,25 @@ class TaskTest extends TestCase
         $response->assertJsonPath('name', $name);
         $response->assertJsonPath('todo_id', $task->getAttribute('todo_id'));
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testTaskUpdateInvalidData()
+    {
+        /** @var Task $team */
+        $task = Task::factory()->for(Todo::factory())->create();
+
+        $name = 'Pay the heating bills';
+        $response = $this->putJson(route('tasks.update', ['task' => $task->getKey()]), []);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['status', 'type', 'title', 'errors']);
+        $response->assertJsonPath('status', 422);
+        $response->assertJsonPath('type', ApiProblem::TYPE_VALIDATION_ERROR);
+        $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_VALIDATION_ERROR]);
+        $response->assertJsonStructure(['errors' => ['name']]);
+    }
 }
