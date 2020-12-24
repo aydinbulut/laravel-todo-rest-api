@@ -155,4 +155,22 @@ class TaskTest extends TestCase
         $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_VALIDATION_ERROR]);
         $response->assertJsonStructure(['errors' => ['name']]);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testDeleteTask()
+    {
+        $task = Task::factory()->for(Todo::factory())->create();
+
+        $response = $this->deleteJson(route('tasks.destroy', ['task' => $task->getKey()]));
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['id', 'name', 'created_at', 'updated_at']);
+        $response->assertJsonPath('id', $task->getKey());
+        $response->assertJsonPath('name', $task->getAttribute('name'));
+        $response->assertJsonPath('todo_id', $task->getAttribute('todo_id'));
+    }
 }

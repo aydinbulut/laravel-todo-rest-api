@@ -232,10 +232,13 @@ class TaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Task $task
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return response()->json($task->toArray());
     }
 }
