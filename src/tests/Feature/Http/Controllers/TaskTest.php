@@ -173,4 +173,21 @@ class TaskTest extends TestCase
         $response->assertJsonPath('name', $task->getAttribute('name'));
         $response->assertJsonPath('todo_id', $task->getAttribute('todo_id'));
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testDeleteTaskNonExisting()
+    {
+        $response = $this->deleteJson(route('tasks.destroy', ['task' => 1]));
+
+        $response->assertStatus(404);
+        $response->assertJsonStructure(['status', 'type', 'title', 'detail']);
+        $response->assertJsonPath('status', 404);
+        $response->assertJsonPath('type', ApiProblem::TYPE_NOT_FOUND_ERROR);
+        $response->assertJsonPath('title', ApiProblem::$titles[ApiProblem::TYPE_NOT_FOUND_ERROR]);
+        $response->assertJsonPath('detail', 'No Task resource found for 1');
+    }
 }
