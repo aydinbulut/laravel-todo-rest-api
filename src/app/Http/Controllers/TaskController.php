@@ -84,19 +84,19 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Task $task
-     * @return \Illuminate\Http\Response
+     * @param Task $task
+     * @return JsonResponse
      */
     public function show(Task $task)
     {
-        //
+        return response()->json($task->toArray());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param \App\Models\Task $task
+     * @param Task $task
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Task $task)
@@ -107,7 +107,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Task $task
+     * @param Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy(Task $task)
