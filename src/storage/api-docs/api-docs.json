@@ -437,6 +437,7 @@
                         "name": "todo",
                         "in": "path",
                         "description": "ID of Todo",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -486,6 +487,7 @@
                         "name": "todo",
                         "in": "path",
                         "description": "ID of Todo",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -549,6 +551,7 @@
                         "name": "todo",
                         "in": "path",
                         "description": "ID of Todo",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }

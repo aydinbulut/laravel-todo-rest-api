@@ -129,7 +129,7 @@ class TodoController extends Controller
      *      path="/todos/{todo}",
      *      summary="Get a todo resource.",
      *      tags={"Todo"},
-     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path"),
+     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path", required=true),
      *      @OA\Response(
      *          response="200",
      *          description="successful operation",
@@ -173,7 +173,7 @@ class TodoController extends Controller
      *      path="/todos/{todo}",
      *      summary="Update a todo resource.",
      *      tags={"Todo"},
-     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path"),
+     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path", required=true),
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\MediaType(
@@ -233,7 +233,7 @@ class TodoController extends Controller
      *      path="/todos/{todo}",
      *      summary="Delete a todo resource.",
      *      tags={"Todo"},
-     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path"),
+     *      @OA\Parameter(name="todo", description="ID of Todo", @OA\Schema(type="integer"), in="path", required=true),
      *      @OA\Response(
      *          response="200",
      *          description="successful operation",
