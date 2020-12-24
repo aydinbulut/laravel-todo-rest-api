@@ -231,6 +231,39 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @OA\Delete(
+     *      path="/tasks/{task}",
+     *      summary="Delete a task resource.",
+     *      tags={"Task"},
+     *      @OA\Parameter(name="task", description="ID of Task", @OA\Schema(type="integer"), in="path", required=true),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
      * @param Task $task
      * @return JsonResponse
      * @throws \Exception
