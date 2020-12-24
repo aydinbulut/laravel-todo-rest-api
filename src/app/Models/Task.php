@@ -9,12 +9,20 @@ use Illuminate\Database\Eloquent\Model;
  * Class Task
  *
  * @OA\Schema(
- *      schema="Task",
- *      required={"id", "name", "todo_id"},
- *      @OA\Property(property="id", type="integer", readOnly=true),
+ *      schema="Task:update",
+ *      required={"name"},
  *      @OA\Property(property="name", type="string"),
+ * )
+ *
+ * @OA\Schema(
+ *      schema="Task",
+ *      required={"id", "todo_id"},
+ *      @OA\Property(property="id", type="integer", readOnly=true),
  *      @OA\Property(property="todo_id", type="integer"),
- *      allOf={@OA\Property(ref="#/components/schemas/Timestampable")},
+ *      allOf={
+ *          @OA\Property(ref="#/components/schemas/Task:update"),
+ *          @OA\Property(ref="#/components/schemas/Timestampable")
+ *      },
  * )
  *
  * @package App\Models

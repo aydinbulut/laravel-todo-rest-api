@@ -172,6 +172,50 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @OA\Put(
+     *      path="/tasks/{task}",
+     *      summary="Update a task resource.",
+     *      tags={"Task"},
+     *      @OA\Parameter(name="task", description="ID of Task", @OA\Schema(type="integer"), in="path", required=true),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task:update")
+     *                  }
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
      * @param UpdateTaskRequest $request
      * @param Task $task
      * @return JsonResponse
