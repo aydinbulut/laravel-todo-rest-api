@@ -35,4 +35,25 @@ class TaskTest extends TestCase
         $response->assertJsonPath('to', 15);
         $response->assertJsonPath('per_page', 15);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testTaskCreate()
+    {
+        $todo = Todo::factory()->create();
+        $task = Task::factory()->make();
+
+        $response = $this->postJson(route('tasks.store'), [
+            'name' => $task->getAttribute('name'),
+            'todo_id' => $todo->getKey(),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['id', 'name', 'todo_id', 'created_at', 'updated_at']);
+        $response->assertJsonPath('name', $task->getAttribute('name'));
+        $response->assertJsonPath('todo_id', $todo->getKey());
+    }
 }
