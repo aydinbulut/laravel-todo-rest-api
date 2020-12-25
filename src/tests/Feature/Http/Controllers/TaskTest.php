@@ -210,4 +210,24 @@ class TaskTest extends TestCase
         $response->assertJsonPath('id', $task->getKey());
         $response->assertJsonPath('completed', true);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testMarkTaskAsUncompleted()
+    {
+        /** @var Task $team */
+        $task = Task::factory()->for(Todo::factory())->create([
+            'completed' => true,
+        ]);
+
+        $response = $this->postJson(route('tasks.markAsUncompleted', ['task' => $task->getKey()]));
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['id', 'name', 'todo_id', 'completed', 'created_at', 'updated_at']);
+        $response->assertJsonPath('id', $task->getKey());
+        $response->assertJsonPath('completed', false);
+    }
 }

@@ -25,3 +25,5 @@ Route::apiResource('/todos', TodoController::class);
 Route::apiResource('/tasks', TaskController::class);
 Route::post('/tasks/{task}/markAsCompleted', [TaskController::class, 'markAsCompleted'])
     ->name('tasks.markAsCompleted');
+Route::post('/tasks/{task}/markAsUncompleted', [TaskController::class, 'markAsUncompleted'])
+    ->name('tasks.markAsUncompleted');

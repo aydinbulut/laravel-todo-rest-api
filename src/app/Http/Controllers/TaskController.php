@@ -321,4 +321,51 @@ class TaskController extends Controller
 
         return response()->json($task->toArray());
     }
+
+    /**
+     * Update the specified resource as uncompleted in storage.
+     *
+     * @OA\Post(
+     *      path="/tasks/{task}/markAsUncompleted",
+     *      summary="Mark a task resource as uncompleted.",
+     *      tags={"Task"},
+     *      @OA\Parameter(name="task", description="ID of Task", @OA\Schema(type="integer"), in="path", required=true),
+     *      @OA\Response(
+     *          response="200",
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/Task")
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="400-599",
+     *          description="unsuccessful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/problem+json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Property(ref="#/components/schemas/ProblemResponse")
+     *                  }
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @param Task $task
+     * @return JsonResponse
+     */
+    public function markAsUncompleted(Task $task)
+    {
+        $task->setAttribute('completed', false);
+        $task->save();
+
+        return response()->json($task->toArray());
+    }
 }

@@ -359,6 +359,58 @@
                 }
             }
         },
+        "/tasks/{task}/markAsUncompleted": {
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Mark a task resource as uncompleted.",
+                "operationId": "App\\Http\\Controllers\\TaskController::markAsUncompleted",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "path",
+                        "description": "ID of Task",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Task"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400-599": {
+                        "description": "unsuccessful operation",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ProblemResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/todos": {
             "get": {
                 "tags": [
