@@ -39,6 +39,15 @@ class Task extends Model
     protected $fillable = ['name', 'todo_id'];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
+
+    /**
      * Get the Todo that owns the task.
      */
     public function todo()

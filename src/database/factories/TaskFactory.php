@@ -23,6 +23,7 @@ class TaskFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->sentence(8),
+            'completed' => $this->faker->boolean,
         ];
     }
 }

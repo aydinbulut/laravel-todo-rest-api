@@ -23,3 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('/todos', TodoController::class);
 
 Route::apiResource('/tasks', TaskController::class);
+Route::post('/tasks/{task}/markAsCompleted', [TaskController::class, 'markAsCompleted'])
+    ->name('tasks.markAsCompleted');
