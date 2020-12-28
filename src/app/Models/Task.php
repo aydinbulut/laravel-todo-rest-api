@@ -16,9 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @OA\Schema(
  *      schema="Task",
- *      required={"id", "todo_id"},
+ *      required={"id", "todo_id", "completed"},
  *      @OA\Property(property="id", type="integer", readOnly=true),
  *      @OA\Property(property="todo_id", type="integer"),
+ *      @OA\Property(property="completed", type="boolean"),
  *      allOf={
  *          @OA\Property(ref="#/components/schemas/Task:update"),
  *          @OA\Property(ref="#/components/schemas/Timestampable")

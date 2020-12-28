@@ -795,7 +795,8 @@
             "Task": {
                 "required": [
                     "id",
-                    "todo_id"
+                    "todo_id",
+                    "completed"
                 ],
                 "properties": {
                     "id": {
@@ -806,6 +807,10 @@
                     "todo_id": {
                         "description": "Class Task",
                         "type": "integer"
+                    },
+                    "completed": {
+                        "description": "Class Task",
+                        "type": "boolean"
                     }
                 },
                 "type": "object",
